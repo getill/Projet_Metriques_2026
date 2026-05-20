@@ -39,6 +39,29 @@ def mongraphique():
 def histogramme():
     return render_template("histogramme.html")
 
+@app.route("/atelier")
+def atelier():
+    return render_template("atelier.html")
+
+@app.route("/api/vent-marseille")
+def get_vent_marseille():
+    try:
+
+        url = "https://api.open-meteo.com/v1/forecast?latitude=43.2965&longitude=5.3698&current=wind_speed_10m&timezone=Europe%2FParis"
+        response = requests.get(url, timeout=5)
+        data = response.json()
+       
+        wind_speed = data["current"]["wind_speed_10m"]
+        unit = data["current_units"]["wind_speed_10m"]
+        
+        return jsonify({
+            "status": "success",
+            "vitesse": wind_speed,
+            "unite": unit
+        })
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)}), 500
+
 # Ne rien mettre après ce commentaire
     
 if __name__ == "__main__":

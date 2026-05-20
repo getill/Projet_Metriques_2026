@@ -6,7 +6,7 @@
   <title>Contact — Studio Météo Paris</title>
 
   <style>
-    /* --- Variables de Design --- */
+
     :root {
       --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
       --card-bg: rgba(30, 41, 59, 0.7);
@@ -17,7 +17,7 @@
       --input-bg: rgba(15, 23, 42, 0.6);
     }
 
-    /* --- Reset & Base --- */
+ 
     * {
       box-sizing: border-box;
       margin: 0;
@@ -36,7 +36,6 @@
       overflow-x: hidden;
     }
 
-    /* --- Conteneur Principal (Effet Verre) --- */
     .contact-container {
       background: var(--card-bg);
       backdrop-filter: blur(16px);
@@ -50,7 +49,7 @@
       position: relative;
     }
 
-    /* --- En-tête --- */
+
     .contact-header {
       text-align: center;
       margin-bottom: 32px;
@@ -71,7 +70,7 @@
       font-size: 0.95rem;
     }
 
-    /* --- Formulaire --- */
+  
     .form-group-row {
       display: flex;
       gap: 16px;
@@ -99,7 +98,7 @@
       transition: color 0.2s ease;
     }
 
-    /* --- Inputs & Textarea --- */
+
     input[type="text"],
     textarea {
       background: var(--input-bg);
@@ -126,12 +125,11 @@
       background: rgba(15, 23, 42, 0.8);
     }
 
-    /* Changement de couleur du label au focus */
+
     .form-group:focus-within label {
       color: #818cf8;
     }
 
-    /* --- Bouton Soumettre --- */
     .submit-btn {
       background: var(--accent);
       border: none;
@@ -156,7 +154,6 @@
       transform: translateY(0);
     }
 
-    /* --- Notification de succès (JS Feedback) --- */
     .notification {
       position: fixed;
       top: 24px;
@@ -178,7 +175,7 @@
       opacity: 1;
     }
 
-    /* Responsive */
+
     @media (max-width: 480px) {
       .form-group-row {
         flex-direction: column;
@@ -219,23 +216,19 @@
     </form>
   </div>
 
-  <!-- Notification masquée par défaut -->
   <div id="toast" class="notification">
     ✨ Message simulé avec succès !
   </div>
 
   <script>
     document.getElementById('contactForm').addEventListener('submit', function(e) {
-      e.preventDefault(); // Empêche le rechargement de la page
-      
-      // Animation de la notification
+      e.preventDefault(); 
       const toast = document.getElementById('toast');
       toast.classList.add('show');
       
-      // Réinitialisation du formulaire
+  
       this.reset();
       
-      // Disparition automatique après 3,5 secondes
       setTimeout(() => {
         toast.classList.remove('show');
       }, 3500);
