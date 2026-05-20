@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact — Studio Météo Paris</title>
+
+  <style>
+    /* --- Variables de Design --- */
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent: linear-gradient(90deg, #6366f1, #a855f7);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --input-bg: rgba(15, 23, 42, 0.6);
+    }
+
+    /* --- Reset & Base --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+
+    /* --- Conteneur Principal (Effet Verre) --- */
+    .contact-container {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 40px;
+      width: 100%;
+      max-width: 540px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      position: relative;
+    }
+
+    /* --- En-tête --- */
+    .contact-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .contact-header h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      background: var(--accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .contact-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* --- Formulaire --- */
+    .form-group-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      margin-bottom: 20px;
+    }
+
+    .form-group.no-margin {
+      margin-bottom: 0;
+    }
+
+    label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+      transition: color 0.2s ease;
+    }
+
+    /* --- Inputs & Textarea --- */
+    input[type="text"],
+    textarea {
+      background: var(--input-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      color: var(--text-main);
+      font-family: inherit;
+      font-size: 1rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      width: 100%;
+    }
+
+    textarea {
+      resize: none;
+      min-height: 140px;
+    }
+
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: #818cf8;
+      box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    /* Changement de couleur du label au focus */
+    .form-group:focus-within label {
+      color: #818cf8;
+    }
+
+    /* --- Bouton Soumettre --- */
+    .submit-btn {
+      background: var(--accent);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 16px;
+      width: 100%;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      margin-top: 12px;
+      box-shadow: 0 4px 12px rgba(168, 85, 247, 0.2);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+    }
+
+    .submit-btn:active {
+      transform: translateY(0);
+    }
+
+    /* --- Notification de succès (JS Feedback) --- */
+    .notification {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      background: #10b981;
+      color: white;
+      padding: 16px 24px;
+      border-radius: 12px;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+      transform: translateY(-100px);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 1000;
+    }
+
+    .notification.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Responsive */
+    @media (max-width: 480px) {
+      .form-group-row {
+        flex-direction: column;
+        gap: 0;
+      }
+      .contact-container {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="contact-container">
+    <div class="contact-header">
+      <h1>Restons en contact</h1>
+      <p>Une question sur les prévisions ou les métriques ? Laissez un mot.</p>
+    </div>
+
+    <form id="contactForm">
+      <div class="form-group-row">
+        <div class="form-group no-margin">
+          <label for="firstname">Prénom</label>
+          <input type="text" id="firstname" name="firstname" placeholder="Jean" required />
+        </div>
+        <div class="form-group no-margin">
+          <label for="lastname">Nom</label>
+          <input type="text" id="lastname" name="lastname" placeholder="Dupont" required />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Votre Message</label>
+        <textarea id="message" name="message" placeholder="Écrivez votre message ici..." required></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Envoyer le message</button>
+    </form>
+  </div>
+
+  <!-- Notification masquée par défaut -->
+  <div id="toast" class="notification">
+    ✨ Message simulé avec succès !
+  </div>
+
+  <script>
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault(); // Empêche le rechargement de la page
+      
+      // Animation de la notification
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      
+      // Réinitialisation du formulaire
+      this.reset();
+      
+      // Disparition automatique après 3,5 secondes
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500);
+    });
+  </script>
+
+</body>
+</html>
